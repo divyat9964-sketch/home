@@ -1,4 +1,3 @@
-# admin_routes.py
 from flask import Blueprint, request, jsonify, session
 from config.database import db
 
@@ -37,7 +36,7 @@ def register_user():
 
     # Insert user with plain password (no hashing)
     insert_res = db.execute_query(
-        "INSERT INTO `User` (name, role, email, phone, password_hash) VALUES (%s,%s,%s,%s,%s)",
+        "INSERT INTO `User` (name, role, email, phone, password) VALUES (%s,%s,%s,%s,%s)",
         (name, role, email, phone, password)
     )
     
@@ -89,7 +88,7 @@ def update_user(user_id):
         updates.append("phone = %s")
         params.append(phone)
     if password:
-        updates.append("password_hash = %s")
+        updates.append("password = %s")
         params.append(password)
     if role and role in ['owner', 'guest', 'admin']:
         updates.append("role = %s")
